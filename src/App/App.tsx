@@ -2,48 +2,16 @@ import { useState, useEffect } from 'react';
 
 import type { Product, Products, FetchedProducts } from './types';
 
-const query = `#graphql
-  {
-    products(first: 10) {
-      nodes {
-        title
-        images(first: 10) {
-          nodes {
-            altText
-            url
-          }
-        }
-        priceRange {
-          maxVariantPrice {
-            amount
-            currencyCode
-          }
-        }
-      }
-    }
-  }
-`;
-
-const shop = 'vuyo-client-test-store.myshopify.com';
-const accessToken = '36537f5e508deeec4959fd9a6e35075b';
-const url = `https://${shop}/api/2025-07/graphql.json`;
+import { useProducts } from '../api';
 
 const getProducts = async () => {
   let products: Products = [];
 
   try {
-    const request = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': accessToken,
-      },
-      body: JSON.stringify({
-        query: query,
-      }),
-    });
+    const request = await useProducts();
     const response = await request.json();
     const fetchedProducts: FetchedProducts = response.data.products.nodes;
+
     fetchedProducts.forEach((product) => {
       let transformedProduct: Product = {
         title: product.title,
