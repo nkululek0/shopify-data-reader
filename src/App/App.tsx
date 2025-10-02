@@ -1,16 +1,24 @@
 import { useState, useEffect } from 'react';
 
-type Product = {
-  title: string
-};
-
-type Products = Array<Product>;
+import type { Product, Products, FetchedProducts } from './types';
 
 const query = `#graphql
   {
     products(first: 10) {
       nodes {
         title
+        images(first: 10) {
+          nodes {
+            altText
+            url
+          }
+        }
+        priceRange {
+          maxVariantPrice {
+            amount
+            currencyCode
+          }
+        }
       }
     }
   }
@@ -35,7 +43,18 @@ const getProducts = async () => {
       }),
     });
     const response = await request.json();
-    products = response.data.products.nodes;
+    const fetchedProducts: FetchedProducts = response.data.products.nodes;
+    fetchedProducts.forEach((product) => {
+      let transformedProduct: Product = {
+        title: product.title,
+        imageUrl: product.images.nodes[0].url,
+        imageAlt: product.images.nodes[0].altText,
+        price: Number(product.priceRange.maxVariantPrice.amount),
+        currencyCode: product.priceRange.maxVariantPrice.currencyCode
+      };
+
+      products.push(transformedProduct);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -70,7 +89,9 @@ function App() {
         !isLoading && (
           products.length > 0 ? (
             products.map((product, index) => (
-            <p key={index}>{ product.title }</p>
+            <p key={index}>
+              <span>{ product.title }</span>
+            </p>
           ))
           ) : (
             <p>No products found</p>
