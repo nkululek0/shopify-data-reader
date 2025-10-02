@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import type { Product, Products, FetchedProducts } from './types';
+import type { Product, Products, FetchedProducts } from '../types';
 
 import { useProducts } from '../api';
 
