@@ -4,6 +4,8 @@ import type { Product, Products, FetchedProducts } from '../types';
 
 import { useProducts } from '../api';
 
+import { ProductListing } from '../components/ProductListing';
+
 const getProducts = async () => {
   let products: Products = [];
 
@@ -55,13 +57,7 @@ function App() {
       }
       {
         !isLoading && (
-          products.length > 0 ? (
-            products.map((product, index) => (
-            <p key={index}>
-              <span>{ product.title }</span>
-            </p>
-          ))
-          ) : (
+          products.length > 0 ? <ProductListing products={ products }/> : (
             <p>No products found</p>
           )
         )
