@@ -1,0 +1,25 @@
+.products-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.product-item-wrapper {
+    width: 320px;
+    height: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.product-item-image {
+    border-radius: 16px;
+}
+
+.product-item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+    height: 30%;
+}

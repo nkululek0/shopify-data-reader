@@ -4,13 +4,22 @@ type ProductProps = {
     product: Product
 };
 
+import styles from './styles.module.css';
+
 export function Product(props: ProductProps) {
     const { product } = props;
-    const { title } = product;
+    const { imageUrl, imageAlt, title, currencyCode, price } = product;
 
     return (
-        <div className="product-item-container">
-            <p>{ title }</p>
-        </div>
+        <article className={ styles['product-item-wrapper'] }>
+            <img src={ imageUrl } alt={ imageAlt } className={ styles['product-item-image'] } />
+            <section className={ styles['product-item-content'] }>
+                <p>{ title }</p>
+                <p>
+                    <span>{ currencyCode }</span>
+                    <span>{ price }</span>
+                </p>
+            </section>
+        </article>
     );
 };
