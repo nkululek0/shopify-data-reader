@@ -34,8 +34,8 @@ export function ProductListing() {
                 products.length > 0 ?
                     <section className={ styles['products-wrapper'] }>
                         {
-                            products.map((product) => (
-                                <ProductComponent product={ product }/>
+                            products.map((product, index) => (
+                                <ProductComponent product={ product } key={ index }/>
                             ))
                         }
                     </section> : (
