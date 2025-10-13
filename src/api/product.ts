@@ -1,5 +1,5 @@
-const shop = 'vuyo-client-test-store.myshopify.com';
-const accessToken = '36537f5e508deeec4959fd9a6e35075b';
+const shop = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN;
+const accessToken = import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 const url = `https://${shop}/api/2025-07/graphql.json`;
 const query = `#graphql
   {
@@ -23,7 +23,7 @@ const query = `#graphql
   }
 `;
 
-export const useProducts = () => {
+export const fetchProducts = () => {
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -33,5 +33,5 @@ export const useProducts = () => {
       body: JSON.stringify({
         query: query,
       }),
-    });;
+    });
 };
